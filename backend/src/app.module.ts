@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppService } from './app.service';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
-import { CacheModule } from './modules/cache/cache.module';
+import { RedisCacheModule } from './modules/cache/cache.module';
 import { HealthModule } from './modules/health/health.module';
 
 @Module({
@@ -35,28 +36,17 @@ import { HealthModule } from './modules/health/health.module';
       }),
     }),
 
-    TasksModule,
-
-    UsersModule,
-
-    AuthModule,
-
-    NotificationsModule,
-
-    CacheModule,
-
     HealthModule,
 
-    // // Scheduled tasks (cron jobs)
-    // ScheduleModule.forRoot(),
+    // Tâches planifiées (cron jobs)
+    ScheduleModule.forRoot(),
 
-    // // Feature modules
-    // AuthModule,
-    // UsersModule,
-    // TasksModule,
-    // NotificationsModule,
-    // RedisCacheModule,
-    // HealthModule,
+    AuthModule,
+    UsersModule,
+    TasksModule,
+    NotificationsModule,
+    RedisCacheModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
