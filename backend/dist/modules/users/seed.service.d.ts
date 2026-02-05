@@ -2,6 +2,7 @@ import { OnApplicationBootstrap } from '@nestjs/common';
 import { Repository, DataSource } from 'typeorm';
 import { User } from './entities/user.entity';
 import { Task } from '../tasks/entities/task.entity';
+import { Notification } from '../notifications/entities/notification.entity';
 export declare class SeedService implements OnApplicationBootstrap {
     private userRepository;
     private taskRepository;

@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
-import { Task, TaskStatus, TaskPriority } from '../tasks/entities/task.entity';
+import { TaskStatus, TaskPriority, Task } from '../tasks/entities/task.entity';
+import { Notification, NotificationType } from '../notifications/entities/notification.entity';
 
 @Injectable()
 export class SeedService implements OnApplicationBootstrap {
@@ -263,7 +264,7 @@ export class SeedService implements OnApplicationBootstrap {
         dueDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
         tags: ['intégration', 'slack'],
         createdById: demoUser.id,
-        assigneeId: null,
+        assigneeId: undefined,
       },
     ];
 
@@ -279,64 +280,64 @@ export class SeedService implements OnApplicationBootstrap {
     const [demoUser, alice, bob] = users;
     const now = new Date();
 
-    // const notificationsData = [
-    //   {
-    //     userId: demoUser.id,
-    //     type: NotificationType.TASK_ASSIGNED,
-    //     title: 'Nouvelle tâche assignée',
-    //     message: 'Alice vous a assigné la tâche "Rédiger la documentation API"',
-    //     isRead: false,
-    //     metadata: { taskTitle: 'Rédiger la documentation API' },
-    //   },
-    //   {
-    //     userId: demoUser.id,
-    //     type: NotificationType.TASK_OVERDUE,
-    //     title: 'Tâche en retard',
-    //     message: 'La tâche "Réviser les conditions générales" a dépassé son échéance',
-    //     isRead: false,
-    //     metadata: { taskTitle: 'Réviser les conditions générales' },
-    //   },
-    //   {
-    //     userId: demoUser.id,
-    //     type: NotificationType.TASK_COMPLETED,
-    //     title: 'Tâche terminée',
-    //     message: 'Bob a terminé la tâche "Refactorer le module d\'authentification"',
-    //     isRead: true,
-    //     metadata: { taskTitle: 'Refactorer le module d\'authentification' },
-    //     readAt: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000),
-    //   },
-    //   {
-    //     userId: demoUser.id,
-    //     type: NotificationType.TASK_UPDATED,
-    //     title: 'Tâche mise à jour',
-    //     message: 'La priorité de "Corriger le bug de connexion" a été changée en Urgent',
-    //     isRead: true,
-    //     metadata: { taskTitle: 'Corriger le bug de connexion' },
-    //     readAt: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),
-    //   },
-    //   {
-    //     userId: bob.id,
-    //     type: NotificationType.TASK_ASSIGNED,
-    //     title: 'Nouvelle tâche assignée',
-    //     message: 'Demo User vous a assigné la tâche "Corriger le bug de connexion"',
-    //     isRead: false,
-    //     metadata: { taskTitle: 'Corriger le bug de connexion' },
-    //   },
-    //   {
-    //     userId: alice.id,
-    //     type: NotificationType.TASK_ASSIGNED,
-    //     title: 'Nouvelle tâche assignée',
-    //     message: 'Demo User vous a assigné la tâche "Mettre à jour les dépendances"',
-    //     isRead: false,
-    //     metadata: { taskTitle: 'Mettre à jour les dépendances' },
-    //   },
-    // ];
+    const notificationsData = [
+      {
+        userId: demoUser.id,
+        type: NotificationType.TASK_ASSIGNED,
+        title: 'Nouvelle tâche assignée',
+        message: 'Alice vous a assigné la tâche "Rédiger la documentation API"',
+        isRead: false,
+        metadata: { taskTitle: 'Rédiger la documentation API' },
+      },
+      {
+        userId: demoUser.id,
+        type: NotificationType.TASK_OVERDUE,
+        title: 'Tâche en retard',
+        message: 'La tâche "Réviser les conditions générales" a dépassé son échéance',
+        isRead: false,
+        metadata: { taskTitle: 'Réviser les conditions générales' },
+      },
+      {
+        userId: demoUser.id,
+        type: NotificationType.TASK_COMPLETED,
+        title: 'Tâche terminée',
+        message: 'Franck a terminé la tâche "Refactorer le module d\'authentification"',
+        isRead: true,
+        metadata: { taskTitle: 'Refactorer le module d\'authentification' },
+        readAt: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000),
+      },
+      {
+        userId: demoUser.id,
+        type: NotificationType.TASK_UPDATED,
+        title: 'Tâche mise à jour',
+        message: 'La priorité de "Corriger le bug de connexion" a été changée en Urgent',
+        isRead: true,
+        metadata: { taskTitle: 'Corriger le bug de connexion' },
+        readAt: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),
+      },
+      {
+        userId: bob.id,
+        type: NotificationType.TASK_ASSIGNED,
+        title: 'Nouvelle tâche assignée',
+        message: 'Demo User vous a assigné la tâche "Corriger le bug de connexion"',
+        isRead: false,
+        metadata: { taskTitle: 'Corriger le bug de connexion' },
+      },
+      {
+        userId: alice.id,
+        type: NotificationType.TASK_ASSIGNED,
+        title: 'Nouvelle tâche assignée',
+        message: 'Demo User vous a assigné la tâche "Mettre à jour les dépendances"',
+        isRead: false,
+        metadata: { taskTitle: 'Mettre à jour les dépendances' },
+      },
+    ];
 
-//     for (const notifData of notificationsData) {
-//       const notification = this.notificationRepository.create(notifData);
-//       await this.notificationRepository.save(notification);
-//     }
+    for (const notifData of notificationsData) {
+      const notification = this.notificationRepository.create(notifData);
+      await this.notificationRepository.save(notification);
+    }
 
-//     this.logger.log(`  🔔 ${notificationsData.length} notifications créées`);
+    this.logger.log(`${notificationsData.length} notifications créées`);
   }
 }

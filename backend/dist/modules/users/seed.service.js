@@ -53,6 +53,7 @@ const typeorm_2 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
 const user_entity_1 = require("./entities/user.entity");
 const task_entity_1 = require("../tasks/entities/task.entity");
+const notification_entity_1 = require("../notifications/entities/notification.entity");
 let SeedService = SeedService_1 = class SeedService {
     userRepository;
     taskRepository;
@@ -282,7 +283,7 @@ let SeedService = SeedService_1 = class SeedService {
                 dueDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
                 tags: ['intégration', 'slack'],
                 createdById: demoUser.id,
-                assigneeId: null,
+                assigneeId: undefined,
             },
         ];
         for (const taskData of tasksData) {
@@ -294,6 +295,63 @@ let SeedService = SeedService_1 = class SeedService {
     async seedNotifications(users) {
         const [demoUser, alice, bob] = users;
         const now = new Date();
+        const notificationsData = [
+            {
+                userId: demoUser.id,
+                type: notification_entity_1.NotificationType.TASK_ASSIGNED,
+                title: 'Nouvelle tâche assignée',
+                message: 'Alice vous a assigné la tâche "Rédiger la documentation API"',
+                isRead: false,
+                metadata: { taskTitle: 'Rédiger la documentation API' },
+            },
+            {
+                userId: demoUser.id,
+                type: notification_entity_1.NotificationType.TASK_OVERDUE,
+                title: 'Tâche en retard',
+                message: 'La tâche "Réviser les conditions générales" a dépassé son échéance',
+                isRead: false,
+                metadata: { taskTitle: 'Réviser les conditions générales' },
+            },
+            {
+                userId: demoUser.id,
+                type: notification_entity_1.NotificationType.TASK_COMPLETED,
+                title: 'Tâche terminée',
+                message: 'Franck a terminé la tâche "Refactorer le module d\'authentification"',
+                isRead: true,
+                metadata: { taskTitle: 'Refactorer le module d\'authentification' },
+                readAt: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000),
+            },
+            {
+                userId: demoUser.id,
+                type: notification_entity_1.NotificationType.TASK_UPDATED,
+                title: 'Tâche mise à jour',
+                message: 'La priorité de "Corriger le bug de connexion" a été changée en Urgent',
+                isRead: true,
+                metadata: { taskTitle: 'Corriger le bug de connexion' },
+                readAt: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),
+            },
+            {
+                userId: bob.id,
+                type: notification_entity_1.NotificationType.TASK_ASSIGNED,
+                title: 'Nouvelle tâche assignée',
+                message: 'Demo User vous a assigné la tâche "Corriger le bug de connexion"',
+                isRead: false,
+                metadata: { taskTitle: 'Corriger le bug de connexion' },
+            },
+            {
+                userId: alice.id,
+                type: notification_entity_1.NotificationType.TASK_ASSIGNED,
+                title: 'Nouvelle tâche assignée',
+                message: 'Demo User vous a assigné la tâche "Mettre à jour les dépendances"',
+                isRead: false,
+                metadata: { taskTitle: 'Mettre à jour les dépendances' },
+            },
+        ];
+        for (const notifData of notificationsData) {
+            const notification = this.notificationRepository.create(notifData);
+            await this.notificationRepository.save(notification);
+        }
+        this.logger.log(`${notificationsData.length} notifications créées`);
     }
 };
 exports.SeedService = SeedService;
@@ -301,7 +359,7 @@ exports.SeedService = SeedService = SeedService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(1, (0, typeorm_1.InjectRepository)(task_entity_1.Task)),
-    __param(2, (0, typeorm_1.InjectRepository)(Notification)),
+    __param(2, (0, typeorm_1.InjectRepository)(notification_entity_1.Notification)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
