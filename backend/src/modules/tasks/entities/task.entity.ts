@@ -1,3 +1,4 @@
+import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -24,6 +25,7 @@ export enum TaskPriority {
 
 @Entity('tasks')
 export class Task {
+  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -59,16 +61,16 @@ export class Task {
   @Column({ type: 'simple-array', nullable: true })
   tags: string[];
 
-//   @ManyToOne(() => User, (user) => user.tasks, { nullable: true })
-//   @JoinColumn({ name: 'assigneeId' })
-//   assignee: User;
+  @ManyToOne(() => User, (user) => user.tasks, { nullable: true })
+  @JoinColumn({ name: 'assigneeId' })
+  assignee: User;
 
-//   @Column({ nullable: true })
-//   assigneeId: string;
+  @Column({ nullable: true })
+  assigneeId: string;
 
-//   @ManyToOne(() => User, (user) => user.createdTasks)
-//   @JoinColumn({ name: 'createdById' })
-//   createdBy: User;
+  @ManyToOne(() => User, (user) => user.createdTasks)
+  @JoinColumn({ name: 'createdById' })
+  createdBy: User;
 
   @Column()
   createdById: string;

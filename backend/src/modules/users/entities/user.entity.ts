@@ -34,11 +34,11 @@ export class User {
   @Column({ default: 'user' })
   role: 'admin' | 'user';
 
-//   @OneToMany(() => Task, (task) => task.assignee)
-//   tasks: Task[];
+  @OneToMany(() => Task, (task) => task.assignee)
+  tasks: Task[];
 
-//   @OneToMany(() => Task, (task) => task.createdBy)
-//   createdTasks: Task[];
+  @OneToMany(() => Task, (task) => task.createdBy)
+  createdTasks: Task[];
 
   @OneToMany(() => Notification, (notification) => notification.user)
   notifications: Notification[];
