@@ -12,6 +12,10 @@ const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const tasks_module_1 = require("./modules/tasks/tasks.module");
+const users_module_1 = require("./modules/users/users.module");
+const auth_module_1 = require("./modules/auth/auth.module");
+const notifications_module_1 = require("./modules/notifications/notifications.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -37,6 +41,10 @@ exports.AppModule = AppModule = __decorate([
                     logging: configService.get('NODE_ENV') === 'development',
                 }),
             }),
+            tasks_module_1.TasksModule,
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule,
+            notifications_module_1.NotificationsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
