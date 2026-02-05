@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './modules/tasks/tasks.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { TasksModule } from './modules/tasks/tasks.module';
     }),
 
     TasksModule,
+
+    UsersModule,
 
     // // Scheduled tasks (cron jobs)
     // ScheduleModule.forRoot(),
