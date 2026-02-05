@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { CacheModule } from './modules/cache/cache.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -43,6 +44,8 @@ import { CacheModule } from './modules/cache/cache.module';
     NotificationsModule,
 
     CacheModule,
+
+    HealthModule,
 
     // // Scheduled tasks (cron jobs)
     // ScheduleModule.forRoot(),
