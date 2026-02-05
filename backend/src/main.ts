@@ -85,9 +85,9 @@ async function bootstrap() {
   const port = process.env.PORT || 3333;
   await app.listen(port, '0.0.0.0');
   
-  logger.log(`🚀 TaskManager API running on http://0.0.0.0:${port}`);
-  logger.log(`📚 Swagger docs available at http://localhost:${port}/api/docs`);
-  logger.log(`❤️ Health check at http://localhost:${port}/api/health`);
-  logger.log(`👤 Demo account: demo@taskmanager.com / demo1234`);
+  logger.log(`API TaskManager exécutée sur http://0.0.0.0:${port}`);
+  logger.log(`Documents Swagger disponibles sur http://localhost:${port}/api/docs`);
+  logger.log(`Etat de santé à http://localhost:${port}/api/health`);
+  logger.log(`Compte démo: demo@taskmanager.com / demo1234`);
 }
 bootstrap();
