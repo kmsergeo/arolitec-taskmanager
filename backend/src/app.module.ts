@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -28,6 +29,19 @@ import { AppService } from './app.service';
         logging: configService.get('NODE_ENV') === 'development',
       }),
     }),
+
+    TasksModule,
+
+    // // Scheduled tasks (cron jobs)
+    // ScheduleModule.forRoot(),
+
+    // // Feature modules
+    // AuthModule,
+    // UsersModule,
+    // TasksModule,
+    // NotificationsModule,
+    // RedisCacheModule,
+    // HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
