@@ -7,17 +7,17 @@ import {
 } from 'class-validator';
 
 export class RegisterDto {
-  @ApiProperty({ example: 'john.doe@example.com' })
+  @ApiProperty({ example: 'user.test@example.com' })
   @IsEmail({}, { message: 'Adresse email invalide' })
   email: string;
 
-  @ApiProperty({ example: 'John' })
+  @ApiProperty({ example: 'User' })
   @IsString()
   @MinLength(2, { message: 'Le prénom doit contenir au moins 2 caractères' })
   @MaxLength(50)
   firstName: string;
 
-  @ApiProperty({ example: 'Doe' })
+  @ApiProperty({ example: 'Test' })
   @IsString()
   @MinLength(2, { message: 'Le nom doit contenir au moins 2 caractères' })
   @MaxLength(50)
@@ -31,7 +31,7 @@ export class RegisterDto {
 }
 
 export class LoginDto {
-  @ApiProperty({ example: 'demo@taskflow.com' })
+  @ApiProperty({ example: 'demo@taskmanager.com' })
   @IsEmail({}, { message: 'Adresse email invalide' })
   email: string;
 

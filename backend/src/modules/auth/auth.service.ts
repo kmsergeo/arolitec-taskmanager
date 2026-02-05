@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from '../users/entites/user.entity';
+import { User } from '../users/entities/user.entity';
 import { AuthResponseDto, LoginDto, RegisterDto } from './dto/auth.dto';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AuthService {
 
     this.logger.log(`Tentative d'inscription: ${email}`);
 
-    // Check if user already exists
+    // Vérifier si l'utilisateur existe déjà
     const existingUser = await this.userRepository.findOne({ where: { email } });
     if (existingUser) {
       this.logger.warn(`Email déjà utilisé: ${email}`);
@@ -39,7 +39,7 @@ export class AuthService {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      // Create user
+      // Créer un utilisateur
       const user = this.userRepository.create({
         email,
         firstName,
@@ -53,7 +53,7 @@ export class AuthService {
 
       this.logger.log(`Utilisateur créé: ${email}`);
 
-      // Generate token
+      // Generer token
       const token = this.generateToken(user);
 
       return {
@@ -76,21 +76,21 @@ export class AuthService {
 
     this.logger.log(`Tentative de connexion: ${email}`);
 
-    // Find user
+    // Charger un utilisateur par son email
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) {
       this.logger.warn(`Utilisateur non trouvé: ${email}`);
       throw new UnauthorizedException('Email ou mot de passe incorrect');
     }
 
-    // Verify password
+    // Verifier le mot de passe
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       this.logger.warn(`Mot de passe incorrect pour: ${email}`);
       throw new UnauthorizedException('Email ou mot de passe incorrect');
     }
 
-    // Check if user is active
+    // Vérifiez si l'utilisateur est actif
     if (!user.isActive) {
       this.logger.warn(`Compte désactivé: ${email}`);
       throw new UnauthorizedException('Ce compte a été désactivé');
@@ -98,7 +98,7 @@ export class AuthService {
 
     this.logger.log(`Connexion réussie: ${email}`);
 
-    // Generate token
+    // Generer token
     const token = this.generateToken(user);
 
     return {
