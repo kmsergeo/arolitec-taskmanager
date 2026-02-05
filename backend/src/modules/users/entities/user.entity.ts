@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Task } from '../../tasks/entities/task.entity';
+import { Notification } from '../../notifications/entities/notification.entity';
 
 @Entity('users')
 export class User {
@@ -39,8 +40,8 @@ export class User {
 //   @OneToMany(() => Task, (task) => task.createdBy)
 //   createdTasks: Task[];
 
-//   @OneToMany(() => Notification, (notification) => notification.user)
-//   notifications: Notification[];
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
 
   @CreateDateColumn()
   createdAt: Date;
