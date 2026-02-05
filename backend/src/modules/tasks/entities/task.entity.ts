@@ -1,4 +1,3 @@
-import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 export enum TaskStatus {
   TODO = 'todo',
@@ -25,7 +25,6 @@ export enum TaskPriority {
 
 @Entity('tasks')
 export class Task {
-  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

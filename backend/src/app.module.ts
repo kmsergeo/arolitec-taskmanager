@@ -7,6 +7,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { CacheModule } from './modules/cache/cache.module';
 
 @Module({
   imports: [
@@ -40,6 +41,8 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     AuthModule,
 
     NotificationsModule,
+
+    CacheModule,
 
     // // Scheduled tasks (cron jobs)
     // ScheduleModule.forRoot(),
