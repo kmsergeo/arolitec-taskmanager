@@ -1,4 +1,4 @@
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 export declare enum TaskStatus {
     TODO = "todo",
     IN_PROGRESS = "in_progress",
@@ -12,7 +12,6 @@ export declare enum TaskPriority {
     URGENT = "urgent"
 }
 export declare class Task {
-    [x: string]: any;
     id: string;
     title: string;
     description: string;

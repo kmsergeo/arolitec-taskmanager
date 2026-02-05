@@ -3,11 +3,11 @@ import { User } from '../users/entities/user.entity';
 export declare class NotificationsController {
     private readonly notificationsService;
     constructor(notificationsService: NotificationsService);
-    getNotifications(user: User, unreadOnly?: boolean): Promise<void>;
+    getNotifications(user: User, unreadOnly?: boolean): Promise<import("./entities/notification.entity").Notification[]>;
     getUnreadCount(user: User): Promise<{
-        unreadCount: void;
+        unreadCount: number;
     }>;
-    markAsRead(id: string, user: User): Promise<void>;
+    markAsRead(id: string, user: User): Promise<import("./entities/notification.entity").Notification>;
     markAllAsRead(user: User): Promise<{
         message: string;
     }>;

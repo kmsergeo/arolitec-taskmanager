@@ -11,11 +11,14 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
+const schedule_1 = require("@nestjs/schedule");
 const app_service_1 = require("./app.service");
 const tasks_module_1 = require("./modules/tasks/tasks.module");
 const users_module_1 = require("./modules/users/users.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const notifications_module_1 = require("./modules/notifications/notifications.module");
+const cache_module_1 = require("./modules/cache/cache.module");
+const health_module_1 = require("./modules/health/health.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -41,10 +44,14 @@ exports.AppModule = AppModule = __decorate([
                     logging: configService.get('NODE_ENV') === 'development',
                 }),
             }),
-            tasks_module_1.TasksModule,
-            users_module_1.UsersModule,
+            health_module_1.HealthModule,
+            schedule_1.ScheduleModule.forRoot(),
             auth_module_1.AuthModule,
+            users_module_1.UsersModule,
+            tasks_module_1.TasksModule,
             notifications_module_1.NotificationsModule,
+            cache_module_1.RedisCacheModule,
+            health_module_1.HealthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
